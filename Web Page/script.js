@@ -21,6 +21,7 @@ var Led1Status;
 var Led2Status;
 var Led3Status;
 var Led4Status;
+
 function Carga1Encendida() {
   let messageOn1 = "Luz de la Pc Encendida!!! ";
 
@@ -117,28 +118,156 @@ function Carga4Apagada() {
   );
 }
 
-database.ref().on("value", function (snap) {
-  Led1Status = snap.val().Led1Status;
-  console.log("Cambio en el estado:", Led1Status);
+// Obtener el valor inicial de Led1Status usando once()
+database
+  .ref()
+  .child("Led1Status")
+  .once("value", function (snap) {
+    Led1Status = snap.val();
+    console.log("Valor inicial de Led1Status:", Led1Status);
 
-  if (Led1Status === false) {
-    console.log("Carga 1 Apagada");
-  } else {
-    console.log("Carga 1 Encendida");
-  }
-  toggleSwitch();
-});
+    if (Led1Status === false) {
+      console.log("Carga 1 Apagada");
+    } else {
+      console.log("Carga 1 Encendida");
+    }
+
+    toggleSwitch();
+
+    database
+      .ref()
+      .child("Led1Status")
+      .on("value", function (snap) {
+        Led1Status = snap.val();
+        console.log("Cambio en el estado:", Led1Status);
+
+        if (Led1Status === false) {
+          console.log("Carga 1 Apagada");
+          Carga1Apagada();
+        } else {
+          console.log("Carga 1 Encendida");
+          Carga1Encendida();
+        }
+
+        toggleSwitch(); // Asegúrate de tener definida la función toggleSwitch()
+      });
+  });
+
+// Obtener el valor inicial de Led1Status usando once()
+database
+  .ref()
+  .child("Led2Status")
+  .once("value", function (snap) {
+    Led2Status = snap.val();
+    console.log("Valor inicial de Led2Status:", Led2Status);
+
+    if (Led2Status === false) {
+      console.log("Carga 2 Apagada");
+    } else {
+      console.log("Carga 2 Encendida");
+    }
+
+    toggleSwitch2();
+
+    database
+      .ref()
+      .child("Led2Status")
+      .on("value", function (snap) {
+        Led2Status = snap.val();
+        console.log("Cambio en el estado:", Led2Status);
+
+        if (Led2Status === false) {
+          console.log("Carga 2 Apagada");
+          Carga2Apagada();
+        } else {
+          console.log("Carga 2 Encendida");
+          Carga2Encendida();
+        }
+
+        toggleSwitch2(); // Asegúrate de tener definida la función toggleSwitch()
+      });
+  });
+
+// Obtener el valor inicial de Led1Status usando once()
+database
+  .ref()
+  .child("Led3Status")
+  .once("value", function (snap) {
+    Led3Status = snap.val();
+    console.log("Valor inicial de Led3Status:", Led3Status);
+
+    if (Led3Status === false) {
+      console.log("Carga 3 Apagada");
+    } else {
+      console.log("Carga 3 Encendida");
+    }
+
+    toggleSwitch3();
+
+    database
+      .ref()
+      .child("Led3Status")
+      .on("value", function (snap) {
+        Led3Status = snap.val();
+        console.log("Cambio en el estado:", Led3Status);
+
+        if (Led3Status === false) {
+          console.log("Carga 3 Apagada");
+          Carga3Apagada();
+        } else {
+          console.log("Carga 3 Encendida");
+          Carga3Encendida();
+        }
+
+        toggleSwitch3(); // Asegúrate de tener definida la función toggleSwitch()
+      });
+  });
+
+// Obtener el valor inicial de Led1Status usando once()
+database
+  .ref()
+  .child("Led4Status")
+  .once("value", function (snap) {
+    Led4Status = snap.val();
+    console.log("Valor inicial de Led4Status:", Led4Status);
+
+    if (Led4Status === false) {
+      console.log("Carga 4 Apagada");
+    } else {
+      console.log("Carga 4 Encendida");
+    }
+
+    toggleSwitch4();
+
+    database
+      .ref()
+      .child("Led4Status")
+      .on("value", function (snap) {
+        Led4Status = snap.val();
+        console.log("Cambio en el estado:", Led4Status);
+
+        if (Led4Status === false) {
+          console.log("Carga 4 Apagada");
+          Carga4Apagada();
+        } else {
+          console.log("Carga 4 Encendida");
+          Carga4Encendida();
+        }
+
+        toggleSwitch4(); // Asegúrate de tener definida la función toggleSwitch()
+      });
+  });
+
 document.getElementById("miBoton").addEventListener("click", function () {
   var firebaseRef = firebase.database().ref().child("Led1Status");
-
   if (Led1Status === false) {
     firebaseRef.set(true);
+    // Carga1Encendida();
     Led1Status = true;
-    Carga1Apagada();
   } else {
     firebaseRef.set(false);
     Led1Status = false;
-    Carga1Encendida();
+    // Carga1Apagada();
   }
   toggleSwitch();
 });
@@ -161,11 +290,11 @@ document.getElementById("miBoton2").addEventListener("click", function () {
   if (Led2Status === false) {
     firebaseRef.set(true);
     Led2Status = true;
-    Carga2Encendida();
+    // Carga2Encendida();
   } else {
     firebaseRef.set(false);
     Led2Status = false;
-    Carga2Apagada();
+    // Carga2Apagada();
   }
   toggleSwitch2();
 });
@@ -188,11 +317,11 @@ document.getElementById("miBoton3").addEventListener("click", function () {
   if (Led3Status === false) {
     firebaseRef.set(true);
     Led3Status = true;
-    Carga3Encendida();
+    // Carga3Encendida();
   } else {
     firebaseRef.set(false);
     Led3Status = false;
-    Carga3Apagada();
+    // Carga3Apagada();
   }
   toggleSwitch3();
 });
@@ -215,11 +344,11 @@ document.getElementById("miBoton4").addEventListener("click", function () {
   if (Led4Status === false) {
     firebaseRef.set(true);
     Led4Status = true;
-    Carga4Encendida();
+    // Carga4Encendida();
   } else {
     firebaseRef.set(false);
     Led4Status = false;
-    Carga4Apagada();
+    // Carga4Apagada();
   }
   toggleSwitch4();
 });
